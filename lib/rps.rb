@@ -1,3 +1,5 @@
+require 'bundler/setup'
+
 class RPSPlayer
   include Comparable
 

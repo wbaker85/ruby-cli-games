@@ -1,5 +1,6 @@
-class Card
+require 'bundler/setup'
 
+class Card
   def initialize(rank, suit)
     @rank = rank
     @suit = suit
@@ -35,9 +36,9 @@ end
 
 class Deck
   RANKS = [
-      '2', '3', '4', '5', '6', '7', '8', '9', '10',
-      'Jack', 'King', 'Queen', 'Ace'
-    ]
+    '2', '3', '4', '5', '6', '7', '8', '9', '10',
+    'Jack', 'King', 'Queen', 'Ace'
+  ]
   SUITS = %w(Hearts Diamonds Spades Clubs)
 
   def initialize
@@ -65,7 +66,7 @@ class Participant
   end
 
   def unhide_all_cards
-    @cards.each { |card| card.unhide }
+    @cards.each(&:unhide)
   end
 
   def to_s
@@ -98,7 +99,7 @@ class TwentyOneGame
       break if !play_another_match?
     end
 
-   puts 'Thanks for playing!'
+    puts 'Thanks for playing!'
   end
 
   def valid_yn?(str)
@@ -129,7 +130,7 @@ class TwentyOneGame
   end
 
   def show_match_results
-    puts "#{game_winner == :player ? "Player" : "Dealer"} won!"
+    puts "#{game_winner == :player ? 'Player' : 'Dealer'} won!"
   end
 
   def initialize_game
@@ -184,7 +185,7 @@ class TwentyOneGame
   def player_turn
     loop do
       puts "Dealer cards: #{@dealer}"
-      puts "Player cards: #{@player} (#{score_hand(@player)} points)"     
+      puts "Player cards: #{@player} (#{score_hand(@player)} points)"
 
       break if hit_or_stay_choice == 's'
       @player << @deck.draw_card
@@ -206,7 +207,7 @@ class TwentyOneGame
   end
 
   def deal_hands
-    2.times do 
+    2.times do
       @player << @deck.draw_card
       @dealer << @deck.draw_card
     end
@@ -228,11 +229,11 @@ class TwentyOneGame
     game_winner = winner
     @dealer.unhide_all_cards
 
-    puts 
+    puts
     puts "<============>"
 
-    puts "Player cards: #{@player} (#{score_hand(@player)} points)"     
-    puts "Dealer cards: #{@dealer} (#{score_hand(@dealer)} points)"     
+    puts "Player cards: #{@player} (#{score_hand(@player)} points)"
+    puts "Dealer cards: #{@dealer} (#{score_hand(@dealer)} points)"
 
     if busted?(@player)
       puts 'Player busted!'

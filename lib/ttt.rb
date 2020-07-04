@@ -1,3 +1,5 @@
+require 'bundler/setup'
+
 class Player
   def initialize(board)
     @board = board
